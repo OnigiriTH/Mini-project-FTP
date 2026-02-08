@@ -29,7 +29,7 @@ $files = ftp_rawlist($conn, $path);
 <body class="bg-light">
 
     <div class="container mt-4">
-        <h3>📁 Cloud Storage : <?php echo $user; ?></h3>
+        <h3>📁 IT Storage : <?php echo $user; ?></h3>
 
         <div class="mb-3">
             <a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
