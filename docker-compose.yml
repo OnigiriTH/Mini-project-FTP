@@ -1,0 +1,32 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8081:80"
+    environment:
+      STORAGE_ROOT: /var/www/storage
+      DB_PATH: /var/www/data/app.sqlite
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASS: ${ADMIN_PASS}
+    volumes:
+      - ./src:/var/www/html
+      - ./storage:/var/www/storage
+      - ./data:/var/www/data
+      - ./php.ini:/usr/local/etc/php/conf.d/zzz-custom.ini
+    restart: unless-stopped
+  ftp:
+    image: fauria/vsftpd
+    container_name: ftp_server
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    environment:
+      FTP_USER: user
+      FTP_PASS: 1234
+      PASV_ADDRESS: 127.0.0.1
+      PASV_MIN_PORT: 21100
+      PASV_MAX_PORT: 21110
+    volumes:
+      - ./storage:/home/vsftpd
+      - ./vsftpd-config:/etc/vsftpd
+    restart: unless-stopped
